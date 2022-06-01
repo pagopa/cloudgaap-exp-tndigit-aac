@@ -1,16 +1,16 @@
 # SERVER ENDPOINT
 server:
-   host: ${SERVER_HOST:localhost}
-   port: ${SERVER_PORT:8080}
+   host: ${SERVER_HOST:0.0.0.0}
+   port: ${PORT:8080}
    servlet:
-     context-path: ${SERVER_CONTEXT:/}
+     context-path: ${CGAAP_BASE_PATH:/}
    tomcat:
      remoteip:
       remote_ip_header: ${SERVER_TOMCAT_REMOTE_IP_HEADER:x-forwarded-for}
       protocol_header: ${SERVER_TOMCAT_PROTOCOL_HEADER:x-forwarded-proto}
-   max-http-header-size: 32000     
+   max-http-header-size: 32000
    error:
-      include-stacktrace: ON_TRACE_PARAM   
+      include-stacktrace: ON_TRACE_PARAM
 
 # APPLICATION EXTERNAL URL
 application:
@@ -37,7 +37,7 @@ admin:
 
 # BASIC SECURITY PROPERTIES
 security:
-   keystore: ${JWK_KEYSTORE:classpath:/keystore.jwks} 
+   keystore: ${JWK_KEYSTORE:classpath:/keystore.jwks}
    cache:
       jwks: no-cache, no-store, max-age=0, must-revalidate #set cacheable with "public, max-age=3600, must-revalidate, no-transform"
 
@@ -60,8 +60,8 @@ oauth2:
    refreshtoken:
       validity: ${REFRESH_TOKEN_VALIDITY:2592000}
    authcode:
-      validity: ${AUTH_CODE_VALIDITY:600}          
-            
+      validity: ${AUTH_CODE_VALIDITY:600}
+
 #JWT
 jwt:
    issuer: ${JWT_ISSUER:${application.url}}
@@ -124,38 +124,38 @@ providers:
         userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
         userNameAttributeName: email
       - clientName: Facebook
-        clientAuthenticationMethod: client_secret_post      
+        clientAuthenticationMethod: client_secret_post
         scope: public_profile,email
         authorizationUri: https://www.facebook.com/v2.8/dialog/oauth
         tokenUri: https://graph.facebook.com/v2.8/oauth/access_token
         userInfoUri: https://graph.facebook.com/me?fields=id,name,email
         userNameAttributeName: id
       - clientName: GitHub
-        clientAuthenticationMethod: client_secret_basic      
+        clientAuthenticationMethod: client_secret_basic
         scope: read:user
         authorizationUri: https://github.com/login/oauth/authorize
         tokenUri: https://github.com/login/oauth/access_token
         userInfoUri: https://api.github.com/user
-        userNameAttributeName: id        
+        userNameAttributeName: id
 
 attributesets:
   sets:
     - identifier: sub
-      keys: sub      
+      keys: sub
     - identifier: profile
       keys: name,family_name,given_name,middle_name,nickname,preferred_username,profile,picture,website,gender,birthdate,zoneinfo,locale,updated_at
     - identifier: email
-      keys: email,email_verified     
+      keys: email,email_verified
     - identifier: phone
-      keys: phone_number,phone_number_verified 
+      keys: phone_number,phone_number_verified
     - identifier: address
       keys: formatted,street_address,locality,region,postal_code,country
-    
+
 
 spid:
   idps:
     - entityName: Aruba ID
-      entityId: https://loginspid.aruba.it    
+      entityId: https://loginspid.aruba.it
       entityLabel: arubaid
       metadataUrl: https://loginspid.aruba.it/metadata
     - entityName: Infocert ID
@@ -177,7 +177,7 @@ spid:
     - entityName: Poste ID
       entityId: https://posteid.poste.it
       entityLabel: posteid
-      metadataUrl: https://posteid.poste.it/jod-fs/metadata/metadata.xml    
+      metadataUrl: https://posteid.poste.it/jod-fs/metadata/metadata.xml
     - entityName: Sielte ID
       entityId: https://identity.sieltecloud.it
       entityLabel: spiditalia
@@ -189,9 +189,9 @@ spid:
     - entityName: Tim ID
       entityId: https://login.id.tim.it/affwebservices/public/saml2sso
       entityLabel: timid
-      metadataUrl: https://login.id.tim.it/spid-services/MetadataBrowser/idp  
-      
-                            
+      metadataUrl: https://login.id.tim.it/spid-services/MetadataBrowser/idp
+
+
 # LOGGING CONFIGURATION
 logging:
    level:
@@ -206,7 +206,7 @@ spring:
    web:
       resources:
         cache.period: 3600
-   h2.console.enabled: false       
+   h2.console.enabled: false
    jpa.hibernate.ddl-auto: validate
 
 # ROLE PREFIX FOR AUTHORIZATION CHECK
@@ -223,14 +223,14 @@ mail:
 
 api:
    clients:
-      auto: 
+      auto:
         introspect: true
         machine: false
         web: false
-        
+
 bootstrap:
     apply: ${BOOTSTRAP_APPLY:false}
-    file: ${BOOTSTRAP:classpath:/bootstrap.yaml} 
+    file: ${BOOTSTRAP:classpath:/bootstrap.yaml}
 
 
 #port used to expose actuator
@@ -239,7 +239,7 @@ management:
       port: ${MANAGEMENT_PORT:8081}
     endpoints:
       enabled-by-default: false
-      web.base-path: 
+      web.base-path:
     endpoint:
       info:
         enabled: true
@@ -256,9 +256,7 @@ openapi:
       name: DS Lab
       url: www.smartcommunitylab.it
       email: info@smartcommunitylab.it
-                      
+
 springdoc:
   swagger-ui:
     disable-swagger-default-url: true
-
-    
